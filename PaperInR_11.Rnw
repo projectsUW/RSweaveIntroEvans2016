@@ -48,6 +48,7 @@ Here you can explain how to get the data. I will provide an example below.
 folder="data"
 nameOfFile="labdata12.dta"
 routeToFile=file.path(folder,nameOfFile)
+#routeToFile='https://github.com/projectsUW/PythonIntroEvans2016/raw/master/data/labdata12.dta'  # from Github
 
 # calling library
 library(foreign)
