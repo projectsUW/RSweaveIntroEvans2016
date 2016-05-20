@@ -1,0 +1,29 @@
+\documentclass{article}
+
+\title{Analyzing Data Example}
+\author{
+        A Great Student from MPA \\
+        Evans School of Public Policy and Governance\\
+        University of Washington\\
+        Seattle, WA 98115, \underline{United States}\\
+        \texttt{greatguy@uw.edu}
+}
+\date{\today}
+
+
+\begin{document}
+\SweaveOpts{concordance=TRUE}
+
+\maketitle
+
+% asbtract style section
+\begin{abstract}
+This is an example on how to use sweave in R
+to prepare a nice paper and get an A+. The next sections will show that\ldots
+\end{abstract}
+
+%%
+% sections come here
+%%
+
+\end{document}

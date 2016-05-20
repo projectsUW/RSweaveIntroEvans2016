@@ -1,0 +1,52 @@
+\documentclass{article}
+
+% References example coming here
+
+\title{Analyzing Data Example}
+\author{
+        A Great Student from MPA \\
+        Evans School of Public Policy and Governance\\
+        University of Washington\\
+        Seattle, WA 98115, \underline{United States}\\
+        \texttt{greatguy@uw.edu}
+}
+\date{\today}
+
+
+\begin{document}
+\SweaveOpts{concordance=TRUE}
+
+\maketitle
+
+% asbtract style section
+\begin{abstract}
+This is an example on how to use sweave in R
+to prepare a nice paper and get an A+. The next sections will show that\ldots
+\end{abstract}
+
+% sections come here
+
+\section{Introduction}\label{intro}
+This is my nice intro to my great paper,
+I will explain the cool things I can do with my R powers
+combined with some Latex.
+
+\section{Outline}\label{outline}
+
+Sections will use a label. This label is needed for referencing. For example the next section has label \emph{data}, so you can say reference saying: As we see in section \ref{data} \ldots
+
+% References example coming here
+
+\section{Data analysis}\label{data}
+
+Here you can explain how to get the data. I will provide an example below.
+
+\subsection{Exploration}\label{eda}
+
+Here you can explain how to explore the data. I will provide an example below.
+
+\subsection{Modeling}\label{model}
+
+% References example coming here
+
+\end{document}

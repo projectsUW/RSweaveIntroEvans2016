@@ -1,0 +1,23 @@
+\documentclass{article}
+
+% TITLE START
+\title{Analyzing Data Example}
+\author{
+        A Great Student from MPA \\
+        Evans School of Public Policy and Governance\\
+        University of Washington\\
+        Seattle, WA 98115, \underline{United States}\\
+        \texttt{greatguy@uw.edu}
+}
+\date{\today}
+% TITLE END ... need command in body, after begin{doc..}: "\maketitle "
+
+\begin{document}
+\SweaveOpts{concordance=TRUE}
+
+\maketitle  
+
+% ABSTRACT WILL COME HERE
+
+
+\end{document}

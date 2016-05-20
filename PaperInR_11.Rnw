@@ -1,0 +1,201 @@
+\documentclass{article}
+
+\usepackage{apacite}
+
+%% FOR TABLES
+\usepackage{caption}
+\captionsetup[table]{belowskip=1pt} % DISTANCE OF CAPTION
+
+\title{Analyzing Data Example}
+\author{
+        A Great Student from MPA \\
+        Evans School of Public Policy and Governance\\
+        University of Washington\\
+        Seattle, WA 98115, \underline{United States}\\
+        \texttt{greatguy@uw.edu}
+}
+\date{\today}
+
+
+\begin{document}
+\SweaveOpts{concordance=TRUE}
+
+\maketitle
+
+
+\begin{abstract}
+This is an example on how to use sweave in R
+to prepare a nice paper and get an A+. The next sections will show that\ldots
+\end{abstract}
+
+\section{Introduction}\label{intro}
+This is my nice intro to my great paper,
+I will explain the cool things I can do with my R powers
+combined with some Latex.
+
+\section{Outline}\label{outline}
+
+Sections will use a label. This label is needed for referencing. For example the next section has label \emph{data}, so you can say reference saying: As we see in section \ref{data} \ldots
+
+This is how you can cite a book, like the one wrote by Kadushin~\cite{kadushin_understanding_2012}.
+
+\section{Data analysis}\label{data}
+
+Here you can explain how to get the data. I will provide an example below.
+
+<<gettingData, echo=TRUE, eval=TRUE>>=
+# initial setting
+folder="data"
+nameOfFile="labdata12.dta"
+routeToFile=file.path(folder,nameOfFile)
+
+# calling library
+library(foreign)
+
+# getting the data
+data=read.dta(routeToFile)
+@
+
+\subsection{Exploration}\label{eda}
+
+Here you can explain how to explore the data. I will provide an example below.
+
+%%%%%%%
+% example 
+
+Now we have the data we want to see the data scales:
+<<verifying, echo=FALSE,eval=TRUE>>=
+str(data)
+@
+
+Variable {\bf make} will be modified:
+
+<<verifying, echo=TRUE,eval=TRUE>>=
+data$make=as.factor(data$make)
+@
+
+%%%%%
+% bullets
+
+As no variable has problem, we can explore them. A simple exploration demands knowing:
+\begin{itemize}
+  \item mean and spread values
+  \item distribution of values
+\end{itemize}
+
+This is the table with mean and spread values, which can be computed for the numeric variables:
+
+%%%%%
+
+<<meanspread,echo=FALSE,results=tex,eval=TRUE>>=
+# notice "results=tex"
+#install.packages("stargazer")
+library(stargazer)
+stargazer(data[,c(1:2)],title = "Mean and Spread values", label = "meanspread")
+meanW=mean(data$weight, na.rm = T)
+@
+
+As you saw, my Table \ref{meanspread} is nice. As you, saw the mean of the variable weight is \Sexpr{meanW}.
+
+Now let's use a box plot to explore location, which can include ordinal values (hidden code again):
+
+%%%%%%%
+% figure 
+
+\begin{figure}[h]
+\centering
+<<location,echo=FALSE, fig=TRUE,eval=TRUE>>=
+# notice "fig=TRUE"
+par(mfrow=c(1,3))
+boxplot(data$mpg)
+boxplot(data$weight)
+boxplot(data$month)
+@
+\caption{Location of values}
+\label{plotlocation}
+\end{figure}
+
+\clearpage %need end page here?
+
+%%%%%%%
+%% TABLES 
+Option 1:
+
+\begin{table}[h] % h stands for "here"
+\centering
+\caption{Distribution of Make}
+ \begin{tabular}{c c } 
+ \hline
+ Make & Frequency \\
+ \hline
+ Ford & 20 \\ 
+ Toyota & 23\\ 
+ \hline
+\end{tabular}
+\label{tableCat1}
+\end{table}
+
+%%% MAYBE EASIER:
+Option 2:
+
+\begin{table}[h]
+\centering
+\caption{Distribution of Make}
+<<tableCat2,echo=FALSE, results=tex,eval=TRUE>>=
+library(xtable)
+tableF=data.frame(table(data$make),row.names = NULL)
+names(tableF)=c("Make", 'Frequency')
+print(xtable(tableF), include.rownames=FALSE,floating=FALSE)
+@
+\label{tableCat2}
+\end{table}
+
+
+\subsection{Modeling}\label{model}
+
+%%%%%%
+% code modeling :
+
+Model 1:
+
+<<reg1,echo=false,eval=TRUE>>=
+reg1=lm(weight~mpg, data = data)
+summary(reg1)
+@
+
+Model 2: 
+<<reg2,echo=false,eval=TRUE>>=
+reg2=lm(weight~mpg+month, data = data)
+summary(reg2)
+@
+
+%%%%%%%
+%% better way coming here!!!!!
+
+What about this:
+
+<<models2,results=tex, echo=false,eval=TRUE>>=
+stargazer(reg1,reg2,covariate.labels=c("Miles / Hour", "Month of Year"),
+          title = "Regression Models", label = "regmods")
+@
+
+%%%%%ANOVA NEEDS XTABLE:
+We can try an anova, but with {\bf xtable}:
+
+
+\begin{table}[h]
+\centering
+\caption{Anova Table}
+<<echo=false,eval=TRUE, results=tex>>=
+anova=xtable(anova(reg1, reg1))
+print(anova, include.rownames=FALSE,floating=FALSE)
+@
+\label{anova}
+\end{table}
+
+
+
+\bibliographystyle{apacite} % try 'abbrv' instead.
+\bibliography{ZoteroExample} %filename is 'ZoteroExample.bib'
+
+\end{document}
